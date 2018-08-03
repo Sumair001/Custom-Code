@@ -26,3 +26,19 @@ select Distinct ColumnData from [dbo].[fn_CSVToTable](@listStr) Where ColumnData
 
 
 ----------------------------------------------------------------------
+
+--------------------------------------------------------------------------------------------------------------------------------
+-->Main Join Query
+
+select * INTO #Temp1 from ABC
+select * INTO #Temp2 from ABC
+
+select * 
+from #Temp1 t1
+inner join #Temp2 t2 on t1.ID = t2.ID
+
+drop table #Temp1 
+drop table #Temp2
+
+
+--------------------------------------------------------------------------------------------------------------------------------
