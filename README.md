@@ -48,21 +48,16 @@ drop table #Temp2
 
 <script>
     function scrollToDiv() {
-
-        if ($get('<%= hdnDivFocus.ClientID %>').value == "DivBookLost")
-        {
-            document.getElementById('<%= DivBookLost.ClientID %>').scrollIntoView();
+        if ($get('<%= hdnDivFocus.ClientID %>').value == "DivBookLost") {
+            $get('<%= DivBookLost.ClientID %>').scrollIntoView();
         }
-        else if ($get('<%= hdnDivFocus.ClientID %>').value == "DivPendingBooks")
-        {
-            document.getElementById('<%= DivPendingBooks.ClientID %>').scrollIntoView();
+        else if ($get('<%= hdnDivFocus.ClientID %>').value == "DivPendingBooks") {
+            $get('<%= DivPendingBooks.ClientID %>').scrollIntoView();
         }
-        else if ($get('<%= hdnDivFocus.ClientID %>').value == "DivReturnBooks")
-        {
-            document.getElementById('<%= DivReturnBooks.ClientID %>').scrollIntoView();
+        else if ($get('<%= hdnDivFocus.ClientID %>').value == "DivReturnBooks") {
+            $get('<%= DivReturnBooks.ClientID %>').scrollIntoView();
         }
-
-    }
+}
 </script>
 
 
