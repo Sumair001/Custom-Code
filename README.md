@@ -57,6 +57,9 @@ drop table #Temp2
         else if ($get('<%= hdnDivFocus.ClientID %>').value == "DivReturnBooks") {
             $get('<%= DivReturnBooks.ClientID %>').scrollIntoView();
         }
+        else if ($get('<%= hdnDivFocus.ClientID %>').value == "DivMain") {
+           $(window).scrollTop($("#ContentPlaceHolder1_UDCLmsTransaction_DivMain").offset().top-60);
+        }
 }
 </script>
 
@@ -65,3 +68,10 @@ hdnDivFocus.Value = "DivBookLost";
 ScriptManager.RegisterStartupScript(Page, typeof(Page), "scrollToDiv();", "setTimeout(scrollToDiv, 1);", true);
 
 ----------------------------------------------------------------------
+
+----------------------------------------------------------------------
+-- Jquery to scroll at specific point from header at 0.
+
+$(window).scrollTop($("#ContentPlaceHolder1_UDCLmsTransaction_DivMain").offset().top-60);
+   
+   ----------------------------------------------------------------------
