@@ -42,3 +42,28 @@ drop table #Temp2
 
 
 --------------------------------------------------------------------------------------------------------------------------------
+
+----------------------------------------------------------------------
+-- Code to Scroll on specific portion OnClick
+
+<script>
+    function scrollToDiv() {
+
+        if ($get('<%= hdnDivFocus.ClientID %>').value == "DivBookLost")
+        {
+            document.getElementById('<%= DivBookLost.ClientID %>').scrollIntoView();
+        }
+        else if ($get('<%= hdnDivFocus.ClientID %>').value == "DivPendingBooks")
+        {
+            document.getElementById('<%= DivPendingBooks.ClientID %>').scrollIntoView();
+        }
+        else if ($get('<%= hdnDivFocus.ClientID %>').value == "DivReturnBooks")
+        {
+            document.getElementById('<%= DivReturnBooks.ClientID %>').scrollIntoView();
+        }
+
+    }
+</script>
+
+
+----------------------------------------------------------------------
