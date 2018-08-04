@@ -65,5 +65,7 @@ drop table #Temp2
     }
 </script>
 
+hdnDivFocus.Value = "DivBookLost";
+ScriptManager.RegisterStartupScript(Page, typeof(Page), "scrollToDiv();", "setTimeout(scrollToDiv, 1);", true);
 
 ----------------------------------------------------------------------
