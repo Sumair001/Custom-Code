@@ -75,3 +75,46 @@ ScriptManager.RegisterStartupScript(Page, typeof(Page), "scrollToDiv();", "setTi
 $(window).scrollTop($("#ContentPlaceHolder1_UDCLmsTransaction_DivMain").offset().top-60);
    
    ----------------------------------------------------------------------
+   
+   
+   
+----------------------------------------------------------------------
+-- File uploading with formates
+
+if ((fileExtension == ".jpeg" || fileExtension == ".png" || fileExtension == ".jpg") || fuFile.HasFile == false)
+{
+if (fuFile.HasFile)
+        {
+            if (txtMode.Text == "Update")
+            {
+                string filePathDelete = lblFilePath.Text;
+                string FolderPathDelete = ConfigurationManager.AppSettings["LmsUpload"];
+                string FilePathDelete = Server.MapPath(FolderPathDelete + filePathDelete);
+                if ((System.IO.File.Exists(FilePathDelete)))
+                {
+                    System.IO.File.Delete(FilePathDelete);
+                }
+            }
+            if (!Directory.Exists(Server.MapPath("~/File/Lms/LmsCoverPage/")))
+            {
+                Directory.CreateDirectory(Server.MapPath("~/File/Lms/LmsCoverPage/"));
+            }
+
+            string fileExtension = Path.GetExtension(fuFile.PostedFile.FileName);
+            string filePath = "B_" + objLMS.LmsBookID + "_" + txtLmsAccessionNo.Text + fileExtension;
+
+            string FolderPath = ConfigurationManager.AppSettings["LmsUpload"];
+            string FilePath = Server.MapPath(FolderPath + filePath);
+            fuFile.SaveAs(FilePath);
+
+            objLMS.CoverPagePath = filePath;
+            objLMS.LmsBookUpdatePath();
+        }
+        else
+        {
+
+        }
+}
+else
+{}
+----------------------------------------------------------------------
