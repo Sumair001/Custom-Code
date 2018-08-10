@@ -46,6 +46,7 @@ drop table #Temp2
 ----------------------------------------------------------------------
 -- Code to Scroll on specific portion OnClick
 
+// Aspx Code
 <script>
     function scrollToDiv() {
         if ($get('<%= hdnDivFocus.ClientID %>').value == "DivBookLost") {
@@ -63,7 +64,7 @@ drop table #Temp2
 }
 </script>
 
-
+// C# Code
 hdnDivFocus.Value = "DivBookLost";
 ScriptManager.RegisterStartupScript(Page, typeof(Page), "scrollToDiv();", "setTimeout(scrollToDiv, 1);", true);
 
@@ -116,5 +117,7 @@ if (fuFile.HasFile)
         }
 }
 else
-{}
+{
+
+}
 ----------------------------------------------------------------------
