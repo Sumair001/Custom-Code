@@ -532,3 +532,113 @@ END
     }
 
 ----------------------------------------------------------------------
+
+
+
+
+----------------------------------------------------------------------
+-- Dynamically using controls for Fast Add
+
+-----> Parent Control
+
+--> Asp
+
+<%@ Register Src="../MyControls/UDCLmsLanguage.ascx" TagName="UDCLmsLanguage" TagPrefix="uc1" %>
+
+<uc1:UDCLmsLanguage ID="UDCLmsLanguage" runat="server" />
+
+--> C# 
+
+    // Delegation work for fast add.  
+    delegate void DelUserControlMehtodDigital();
+
+    protected void Page_Load(object sender, EventArgs e)
+    {
+            DelUserControlMehtodDigital delUserControlLmsLanguageDigital = new DelUserControlMehtodDigital(FillLanguageManageDigital);
+            UDCLmsLanguage.CallingPageMethodDigital = delUserControlLmsLanguageDigital;
+    }
+
+    
+
+-----> Child Control
+
+--> Asp
+ <asp:Button ID="btnSave" runat="server" Text="Add" CssClass="btn btn-success" ValidationGroup="LmsLanguageGroup" OnClientClick="return ConfirmLmsLanguage();" OnClick="btnSave_Click" />
+
+--> C# 
+
+// Delegation work for fast add on book page.
+
+    private System.Delegate _delPageMethod;
+
+    public Delegate CallingPageMethod
+    {
+        set { _delPageMethod = value; }
+    }
+
+
+   public void MyPageLoad(string pageCall)
+    {
+        try
+        {
+            hdnPageCall.Value = pageCall;
+            ddlBranch.SelectedValue = Session["BranchID"].ToString();
+            FillBranch();
+            txtMode.Text = "Add";
+            btnAdd_Click(new object(), new EventArgs());
+        }
+        catch (Exception Exp)
+        {
+            ErrorDiv.Visible = true;
+            lblError.Text = Exp.Message + " " + Exp.StackTrace;
+            objBasePage.ErrorEmail(Exp.Message.ToString(), Exp.StackTrace.ToString());
+        }
+    }
+
+
+
+    protected void btnSave_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            objLMS.BranchID = ddlBranch.SelectedValue;
+            objLMS.Language = txtLmsLanguage.Text;
+            objLMS.LanguageAR = txtLmsLanguageAR.Text;
+            objLMS.IsActive = chkStatus.Checked.ToString();
+            objLMS.LmsLanguageID = "0";
+                if (objLMS.LmsLanguageInsertUpdate())
+                {
+                    SuccessDiv.Visible = true;
+                    lblSuccess.Text = "Saved Successfully";
+                    FillLanguage();
+                    ddlStatus.DataBind();
+
+                    // Delegation work for fast add on book page.
+                    if (Request.RawUrl.ToString().ToUpper().Contains(BookAddUrl))
+                    {
+                        if (hdnPageCall.Value == "Digital")
+                        {
+                            _delPageMethodDigital.DynamicInvoke();
+                        }
+                        else
+                        {
+                            _delPageMethod.DynamicInvoke();
+                        }
+                    }
+                    else
+                    {
+                        LoadLmsLanguage();
+                    }
+                }
+                else
+                {
+                    ErrorDivPopup.Visible = true;
+                    lblErrorPopup.Text = objLMS.sErrorMessage;
+                    mp1.Show();
+                }
+
+    }
+    
+    
+    
+    ----------------------------------------------------------------------
