@@ -46,7 +46,7 @@ drop table #Temp2
 ----------------------------------------------------------------------
 -- Code to Scroll on specific portion OnClick
 
-// Aspx Code
+--> Asp Code
 <script>
     function scrollToDiv() {
         if ($get('<%= hdnDivFocus.ClientID %>').value == "DivBookLost") {
@@ -64,7 +64,7 @@ drop table #Temp2
 }
 </script>
 
-// C# Code
+--> C# Code
 hdnDivFocus.Value = "DivBookLost";
 ScriptManager.RegisterStartupScript(Page, typeof(Page), "scrollToDiv();", "setTimeout(scrollToDiv, 1);", true);
 
@@ -82,6 +82,12 @@ $(window).scrollTop($("#ContentPlaceHolder1_UDCLmsTransaction_DivMain").offset()
 ----------------------------------------------------------------------
 -- File uploading with formates
 
+--> Asp 
+  <asp:Label ID="lblFilePath" runat="server" Visible="false"></asp:Label>
+  <asp:FileUpload ID="fuFile" runat="server" />
+
+
+--> C# Code
 if ((fileExtension == ".jpeg" || fileExtension == ".png" || fileExtension == ".jpg") || fuFile.HasFile == false)
 {
 if (fuFile.HasFile)
