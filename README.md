@@ -145,6 +145,41 @@ where
 ----------------------------------------------------------------------
 -- Custom work for dynamic colunms in grid
 
+-- SQL
+--  [sp_AllTeacherDetails2] '%','%',
+'ID,[ITSID1],[ITSGender1],[AttendanceException1],Branch,ITSID,KHNO,Name,Mobile,Email,[Joining Date]' ,'' 
+
+CREATE procedure [dbo].[sp_AllTeacherDetails2]                    
+ @BranchID as nvarchar(100)=null,                    
+ @StafftypeID as nvarchar(100)=null,                           
+ @LoggedUserID as int,  
+ @Field as nvarchar(max) ,
+ @SearchField    as nvarchar(max)                
+AS                    
+BEGIN    
+IF @SearchField ='' SET @SearchField =' cast(ITSID as nvarchar) +'' ''+ cast(KHNO as nvarchar) like ''%%%'' '
+----------------------------------------------------------------------------------  
+declare @sqlstring nvarchar(max)  
+----------------------------------------------------------------------------------  
+set @sqlstring = 'SELECT        ' + @Field + '
+FROM            (SELECT        TOP (100) PERCENT tblTeacher.ID, tblTeacher.BranchID, tblTeacher.ITSID, tblTeacher.ITSID AS ITSID1, tblTeacher.KHNO, tblTeacher.RFID, 
+                                                    tblTeacher.TRNO_Jamea AS TRNO, tblTeacher.ITS_F_Prefix AS [ITS First Prefix], tblTeacher.ITS_FirstName, tblTeacher.ITS_Surname, 
+                                                    tblTeacher.SurnameAR, tblTeacher.Name, tblTeacher.NameAR, tblTeacher.CompletionYearFromJameaAR AS [Farigh Year], CONVERT(VARCHAR(11), 
+                                                    tblTeacher.JoiningDate, 106) AS [Joining Date]
+                          FROM            tblTeacher LEFT OUTER JOIN
+                                                    tblJsTitle ON tblTeacher.JSTitleID = tblJsTitle.JsTitleID LEFT OUTER JOIN
+                          WHERE        (ISNULL(CAST(tblTeacher.BranchID AS nvarchar), N'''') LIKE ''' + @BranchID + ''') AND (ISNULL(CAST(tblTeacher.StaffTypeID AS nvarchar), N'''') 
+                                                    LIKE ''' + @StafftypeID + ''') AND (ISNULL(CAST(tblTeacher.ITSID AS nvarchar(100)), N'''') LIKE ''' +  @ITSID + ''')) AS TeacherDetail
+WHERE ' +  @SearchField + '
+ORDER BY BranchSortOrder,TeacherSortOrder1,TeacherSortOrder'  
+----------------------------------------------------------------------------------  
+--print (@sqlstring)  
+execute (@sqlstring)  
+----------------------------------------------------------------------------------  
+END 
+
+
+
 --> Asp 
 
 -- Checkboxes
