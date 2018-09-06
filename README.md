@@ -684,3 +684,42 @@ END
 
 
 ----------------------------------------------------------------------
+
+----------------------------------------------------------------------
+-- Code to validate image size before uploading file.
+
+
+--> ASPX Code
+
+<asp:CustomValidator ID="customValidatorUpload" runat="server" ErrorMessage="" ControlToValidate="fileUpload" ClientValidationFunction="checkImageSize" />
+<asp:Button ID="button_fileUpload" runat="server" Text="Upload File" OnClick="button_fileUpload_Click" Enabled="false" />
+<asp:Label ID="lbl_uploadMessage" runat="server" Text="" />
+
+<script type="text/javascript">
+    function checkImageSize(source, args) {
+        var minFileSize = 6144; // 6Kb -> 6 * 1024
+        var maxFileSize = 10240; // 10Kb -> 10 * 1024
+        var fileUpload = $get('<%= fuImage.ClientID%>');
+        var lblUploadMessage = $get('<%= lblUploadMessage.ClientID%>');
+        if (fileUpload.value == '') {
+            return false;
+        }
+        else {
+            var file = fileUpload.files[0];
+            if (file.size > minFileSize && file.size < maxFileSize) {
+                args.IsValid = true;
+                lblUploadMessage.style.display = 'none';
+                return true;
+            } else {
+                args.IsValid = false;
+                lblUploadMessage.innerText = 'File size is not acceptable.';
+                lblUploadMessage.style.display = 'inline';
+                return false;
+            }
+        }
+    }
+</script>
+
+
+
+----------------------------------------------------------------------
