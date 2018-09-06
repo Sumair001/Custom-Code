@@ -728,7 +728,7 @@ END
 -- Query to separate charater and digits in column.
 
 
---> ASPX Code
+--> SQL
 DECLARE @string varchar(100)
 
 SET @string = (SELECT  Top (1)   AccessionNo FROM  LmsBook WHERE (BranchID = @BranchID) And LmsBookCategoryID=@LmsBookCategoryID Order By  LmsBookID Desc)
