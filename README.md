@@ -642,3 +642,45 @@ END
     
     
     ----------------------------------------------------------------------
+    
+    
+    ----------------------------------------------------------------------
+-- Dynamic function for single click even validation of page is fired.
+
+--> Asp Code
+
+<script type="text/javascript">
+    function ExecuteCodeClick(control) {
+        if (typeof (Page_ClientValidate) == 'function' && Page_ClientValidate('SampleGroup') == false) {
+            control.click();
+            control.click();
+        }
+    }
+</script>
+
+<asp:Button ID="btnAddClassCode" Text="+" CssClass="inline-btn" runat="server"
+            OnClientClick="return ExecuteCodeClick(this);" OnClick="btnAddClassCode_Click" TabIndex="5"></asp:Button>
+
+
+--> C# Code
+
+    protected void btnAddClassCode_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            UDCLmsClassCode.MyPageLoad("Physical");
+        }
+        catch (ThreadAbortException)
+        {
+            // ignore it because we know that come from the redirect
+        }
+        catch (Exception Exp)
+        {
+            ErrorDiv.Visible = true;
+            lblError.Text = Exp.Message + " " + Exp.StackTrace;
+            objBasePage.ErrorEmail(Exp.Message.ToString(), Exp.StackTrace.ToString());
+        }
+    }
+
+
+----------------------------------------------------------------------
