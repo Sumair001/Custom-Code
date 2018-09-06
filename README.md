@@ -723,3 +723,19 @@ END
 
 
 ----------------------------------------------------------------------
+
+----------------------------------------------------------------------
+-- Query to separate charater and digits in column.
+
+
+--> ASPX Code
+DECLARE @string varchar(100)
+
+SET @string = (SELECT  Top (1)   AccessionNo FROM  LmsBook WHERE (BranchID = @BranchID) And LmsBookCategoryID=@LmsBookCategoryID Order By  LmsBookID Desc)
+
+WHILE PATINDEX('%[^0-9]%',@string) <> 0
+SET @string = STUFF(@string,PATINDEX('%[^0-9]%',@string),1,'')
+
+SELECT IsNull(@string ,0)as AccessionNo
+
+----------------------------------------------------------------------
