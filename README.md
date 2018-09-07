@@ -739,3 +739,42 @@ SET @string = STUFF(@string,PATINDEX('%[^0-9]%',@string),1,'')
 SELECT IsNull(@string ,0)as AccessionNo
 
 ----------------------------------------------------------------------
+
+
+----------------------------------------------------------------------
+-- Dynamic validation for gridview.
+
+
+--> Aspx Code
+
+<script type="text/javascript">
+
+    function CheckValidation() {
+        var gv = document.getElementById('<%= gvLmsBookRoleRequestListing.ClientID %>');
+        var gvRowCount = gv.rows.length - 1;
+        var rwIndex = 0;
+        var IsValid = true;
+        for (rwIndex; rwIndex <= gvRowCount - 1; rwIndex++) {
+
+            var txtFromDate = document.getElementById("ContentPlaceHolder1_UDCLmsBookRoleRequest_gvLmsBookRoleRequestListing_txtFromDate_" + rwIndex + "");
+            var txtToDate = document.getElementById("ContentPlaceHolder1_UDCLmsBookRoleRequest_gvLmsBookRoleRequestListing_txtToDate_" + rwIndex + "");
+            var ReqFromDate = document.getElementById("ContentPlaceHolder1_UDCLmsBookRoleRequest_gvLmsBookRoleRequestListing_ReqFromDate_" + rwIndex + "");
+            var ReqToDate = document.getElementById("ContentPlaceHolder1_UDCLmsBookRoleRequest_gvLmsBookRoleRequestListing_ReqToDate_" + rwIndex + "");
+            var chkSubmit = document.getElementById("ContentPlaceHolder1_UDCLmsBookRoleRequest_gvLmsBookRoleRequestListing_chkSubmit_" + rwIndex + "");
+
+            if (chkSubmit.checked) {
+                if (txtFromDate.value == '') {
+                    ValidatorEnable(ReqFromDate, true);
+                    IsValid = false;
+                }
+                if (txtToDate.value == '') {
+                    ValidatorEnable(ReqToDate, true);
+                    IsValid = false;
+                }
+            }
+        }
+        return IsValid;
+    }
+</script>
+
+----------------------------------------------------------------------
