@@ -791,4 +791,19 @@ SELECT IsNull(@string ,0)as AccessionNo
                     
 ----------------------------------------------------------------------
 
+----------------------------------------------------------------------
+--> Remove item from dropdown 
+
+--> C#                  
                     
+                    
+    ListItemCollection liCol = ddlUserType.Items;
+                for (int i = 0; i < liCol.Count; i++)
+                {
+                    ListItem listitem = liCol[i];
+                    if (listitem.Value == "8")
+                        ddlUserType.Items.Remove(listitem);
+                }      
+                
+                
+ ----------------------------------------------------------------------               
