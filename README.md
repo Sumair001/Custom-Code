@@ -806,4 +806,59 @@ SELECT IsNull(@string ,0)as AccessionNo
                 }      
                 
                 
- ----------------------------------------------------------------------               
+ ----------------------------------------------------------------------      
+ 
+ ----------------------------------------------------------------------
+--> Script for submit all button for gridview with checkboxes and text fields
+
+--> Javascript
+ <script type="text/javascript">
+
+    function CheckValidation() {
+        var gv = document.getElementById('<%= gvLmsBookRoleRequestListing.ClientID %>');
+        var gvRowCount = gv.rows.length - 1;
+        var rwIndex = 0;
+        var IsValid = true;
+        var IsChk = false;
+        for (rwIndex; rwIndex <= gvRowCount - 1; rwIndex++) {
+            var txtFromDate = document.getElementById("ContentPlaceHolder1_UDCLmsBookRoleRequest_gvLmsBookRoleRequestListing_txtFromDate_" + rwIndex + "");
+            var txtToDate = document.getElementById("ContentPlaceHolder1_UDCLmsBookRoleRequest_gvLmsBookRoleRequestListing_txtToDate_" + rwIndex + "");
+            var ReqFromDate = document.getElementById("ContentPlaceHolder1_UDCLmsBookRoleRequest_gvLmsBookRoleRequestListing_ReqFromDate_" + rwIndex + "");
+            var ReqToDate = document.getElementById("ContentPlaceHolder1_UDCLmsBookRoleRequest_gvLmsBookRoleRequestListing_ReqToDate_" + rwIndex + "");
+            var chkSubmit = document.getElementById("ContentPlaceHolder1_UDCLmsBookRoleRequest_gvLmsBookRoleRequestListing_chkSubmit_" + rwIndex + "");
+
+            if (chkSubmit.checked) {
+                IsChk = true;
+                if (txtFromDate.value == '' || txtToDate.value == '') {
+                    if (txtFromDate.value == '') {
+                        ValidatorEnable(ReqFromDate, true);
+                    }
+                    if (txtToDate.value == '') {
+                        ValidatorEnable(ReqToDate, true);
+                    }
+                    IsValid = false;
+                }
+            }
+            else {
+                ValidatorEnable(ReqFromDate, false);
+                ValidatorEnable(ReqToDate, false);
+            }
+        }
+        // Final check validation
+        if (IsChk != true) {
+            alert('Please select atleast one record.');
+            return false;
+        }
+        else {
+            if (IsChk && IsValid) {
+                return confirm('Are you sure you want to edit this record? Do you want to proceed?');
+            }
+            else {
+                return false;
+            }
+        }
+    }
+</script>
+
+
+----------------------------------------------------------------------
