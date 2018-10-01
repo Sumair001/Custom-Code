@@ -862,3 +862,60 @@ SELECT IsNull(@string ,0)as AccessionNo
 
 
 ----------------------------------------------------------------------
+
+----------------------------------------------------------------------
+--> Script for select and deselect all checkboxes in gridview.
+
+--> Javascript
+
+<script type="text/javascript">
+    // Function to checked and unchecked all chkboxes on header chkbox.
+    function chkSubmitAllChecked(chkSubmitAll) {
+        var gvLmsNewspaperEntryList = $get('<%= gvLmsBookRoleRequestListing.ClientID %>');
+
+            // Get all input elements in Gridview
+            var inputList = gvLmsNewspaperEntryList.getElementsByTagName("input");
+
+            //Checked and Unchecked all chkboxes on header chkbox.
+            for (var i = 0; i < inputList.length; i++) {
+                if (inputList[i].type == "checkbox") {
+                    if (chkSubmitAll.checked) {
+                        inputList[i].checked = true;
+                    }
+                    else {
+                        inputList[i].checked = false;
+                    }
+                }
+            }
+        }
+
+        // Function to checked and unchecked  header chkbox on all chkboxes.
+        function chkSubmitChecked(chkSubmit) {
+            var gvLmsNewspaperEntryList = $get('<%= gvLmsBookRoleRequestListing.ClientID %>');
+            var chkSubmitAll = $get('ContentPlaceHolder1_UDCLmsBookRoleRequest_gvLmsBookRoleRequestListing_chkSubmitAll');
+            var checkHeader = true;
+            // Get all input elements in Gridview
+            var inputList = gvLmsNewspaperEntryList.getElementsByTagName("input");
+
+            // Loop through all check boxes .
+            for (var i = 0; i < inputList.length; i++) {
+                if (inputList[i].type == "checkbox" && inputList[i].id != chkSubmitAll.id) {
+                    if (!inputList[i].checked) {
+                        checkHeader = false;
+                        break;
+                    }
+                }
+            }
+
+            // Checked and unchecked header checkbox.
+            if (checkHeader) {
+                chkSubmitAll.checked = true;
+            }
+            else {
+                chkSubmitAll.checked = false;
+            }
+        }
+</script>
+
+----------------------------------------------------------------------
+
