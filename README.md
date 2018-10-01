@@ -917,5 +917,30 @@ SELECT IsNull(@string ,0)as AccessionNo
         }
 </script>
 
+--> C# Code
+
+  protected void gvLmsBookRoleRequestListing_RowDataBound(object sender, GridViewRowEventArgs e)
+    {
+        try
+        {
+
+            if (e.Row.RowType == DataControlRowType.Header)
+            {
+                CheckBox chkSubmitAll = (CheckBox)e.Row.FindControl("chkSubmitAll");
+                chkSubmitAll.Attributes.Add("onclick", "chkSubmitAllChecked(this);");
+            }
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                CheckBox chkSubmit = (CheckBox)e.Row.FindControl("chkSubmit");
+                chkSubmit.Attributes.Add("onclick", "chkSubmitChecked(this);");
+                 }    }
+        }
+        catch (Exception Exp)
+        {
+            ErrorDiv.Visible = true;
+            lblError.Text = Exp.Message + " " + Exp.StackTrace;
+            objBasePage.ErrorEmail(Exp.Message.ToString(), Exp.StackTrace.ToString());
+        }
+
 ----------------------------------------------------------------------
 
