@@ -943,4 +943,10 @@ SELECT IsNull(@string ,0)as AccessionNo
         }
 
 ----------------------------------------------------------------------
+----------------------------------------------------------------------
+--> Regex for password contains atleast 8 charaters,1 lowercase ,1 uppercase,1 special character.
+
+ ValidationExpression="((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{8,})"
+ 
+ ----------------------------------------------------------------------
 
