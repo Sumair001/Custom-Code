@@ -949,4 +949,20 @@ SELECT IsNull(@string ,0)as AccessionNo
  ValidationExpression="((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{8,})"
  
  ----------------------------------------------------------------------
+ 
+ ----------------------------------------------------------------------
+--> Text changed event from javascript
+
+-> Javascript
+    function texboxchange(control) {
+        var count = control.value.length;
+        if (count > 0) {
+            __doPostBack('<%=txtITSID.ClientID %>', "TextChanged");
+        }
+    }
+
+-> Asp
+<asp:TextBox ID="txtITSID" runat="server" class="form-control" MaxLength="8" OnTextChanged="txtITSID_TextChanged" OnChange="return texboxchange(this);"
+ ValidationGroup="LmsUserAddGroup" autocomplete="off"></asp:TextBox>
+----------------------------------------------------------------------
 
