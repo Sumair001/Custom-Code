@@ -5,14 +5,15 @@
 
 -> C# Code
 
-        public void AddWaterMark()
+                public void AddWaterMark()
         {
             // Image should be with low opacity.
             string WatermarkLocation = "D:\\NewImage.png";
+            string FileLocation = "D:\\Work\\NewFile.pdf";
 
             Document document = new Document();
-            PdfReader pdfReader = new PdfReader("D:\\Work\\NewFile.pdf");
-            PdfStamper stamp = new PdfStamper(pdfReader, new FileStream("D:\\NewDoc.pdf", FileMode.Create));
+            PdfReader pdfReader = new PdfReader(FileLocation);
+            PdfStamper stamp = new PdfStamper(pdfReader, new FileStream(FileLocation.Replace(".pdf", "[temp][file].pdf"), FileMode.Create));
 
             iTextSharp.text.Image img = iTextSharp.text.Image.GetInstance(WatermarkLocation);
             img.SetAbsolutePosition(100, 200); // set the position in the document where you want the watermark to appear (0,0 = bottom left corner of the page)
@@ -28,9 +29,9 @@
             stamp.FormFlattening = true;
             stamp.Close();
 
-            //// now delete the original file and rename the temp file to the original file
-            //File.Delete(FileLocation);
-            //File.Move(FileLocation.Replace(".pdf", "[temp][file].pdf"), FileLocation);
+            // now delete the original file and rename the temp file to the original file
+            File.Delete(FileLocation);
+            File.Move(FileLocation.Replace(".pdf", "[temp][file].pdf"), FileLocation);
         }
 
 
