@@ -1,6 +1,43 @@
 # Custom-Code
 
 ----------------------------------------------------------------------
+--> Water mark image in pdf in asp.net 
+
+-> C# Code
+
+        public void AddWaterMark()
+        {
+            // Image should be with low opacity.
+            string WatermarkLocation = "D:\\NewImage.png";
+
+            Document document = new Document();
+            PdfReader pdfReader = new PdfReader("D:\\Work\\NewFile.pdf");
+            PdfStamper stamp = new PdfStamper(pdfReader, new FileStream("D:\\NewDoc.pdf", FileMode.Create));
+
+            iTextSharp.text.Image img = iTextSharp.text.Image.GetInstance(WatermarkLocation);
+            img.SetAbsolutePosition(100, 200); // set the position in the document where you want the watermark to appear (0,0 = bottom left corner of the page)
+
+
+
+            PdfContentByte waterMark;
+            for (int page = 1; page <= pdfReader.NumberOfPages; page++)
+            {
+                waterMark = stamp.GetOverContent(page);
+                waterMark.AddImage(img);
+            }
+            stamp.FormFlattening = true;
+            stamp.Close();
+
+            //// now delete the original file and rename the temp file to the original file
+            //File.Delete(FileLocation);
+            //File.Move(FileLocation.Replace(".pdf", "[temp][file].pdf"), FileLocation);
+        }
+
+
+----------------------------------------------------------------------
+
+
+----------------------------------------------------------------------
 --> Remove Item from dropdownlist with value.
 
 -> C# Code
