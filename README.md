@@ -1,6 +1,12 @@
 # Custom-Code
 
 ----------------------------------------------------------------------
+--> Disable text box enter.
+
+onkeydown="return (event.keyCode!=13);"
+
+
+----------------------------------------------------------------------
 --> Water mark image in pdf in asp.net 
 
 -> C# Code
