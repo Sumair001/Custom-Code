@@ -1,6 +1,15 @@
 # Custom-Code
 
 ----------------------------------------------------------------------
+--> Regular expression for file uploader for formating.
+-> Aspx
+
+
+<asp:RegularExpressionValidator ID="revImage" ValidationGroup="LmsBookManageGroup" ValidationExpression="^.+(.jpg|.JPG|.png|.PNG|.jpeg|.JPEG)$" ControlToValidate="fuImage" runat="server" ForeColor="Red" Display="Dynamic" />
+
+
+
+----------------------------------------------------------------------
 --> Disable text box enter.
 
 onkeydown="return (event.keyCode!=13);"
