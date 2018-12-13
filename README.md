@@ -43,6 +43,7 @@ onkeydown="return (event.keyCode!=13);"
             }
             stamp.FormFlattening = true;
             stamp.Close();
+            pdfReader.Close();
 
             // now delete the original file and rename the temp file to the original file
             File.Delete(FileLocation);
