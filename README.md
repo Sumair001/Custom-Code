@@ -1,6 +1,102 @@
 # Custom-Code
 
 ----------------------------------------------------------------------
+--> Text Water Mark Script.
+
+public void AddWaterMark(string filePath)
+    {
+        // Write Text on Image
+        DrawText("Sumair Water For Digital Page");
+
+        // Image should be with low opacity.
+        string WatermarkLocation = "D:\\myImage.png";
+
+        string FileLocation = "D:\\B_177744_DB6_v1.pdf";
+
+        Document document = new Document();
+        PdfReader pdfReader = new PdfReader(FileLocation);
+        PdfStamper stamp = new PdfStamper(pdfReader, new FileStream(FileLocation.Replace(".pdf", "[temp][file].pdf"), FileMode.Create));
+
+        //iTextSharp.text.Image img = DrawText("Sumair Water", new System.Drawing.Font("Times New Roman", 12.0f), Color.Black, Color.White);
+        iTextSharp.text.Image img = iTextSharp.text.Image.GetInstance(WatermarkLocation);
+
+        // Decrease image size to increase quality.
+        img.ScalePercent(40);
+
+        // set the position in the document where you want the watermark to appear (0,0 = bottom left corner of the page)
+        img.SetAbsolutePosition(20, 20); 
+
+        PdfContentByte waterMark;
+        for (int page = 1; page <= pdfReader.NumberOfPages; page++)
+        {
+            waterMark = stamp.GetOverContent(page);
+            waterMark.AddImage(img);
+        }
+        stamp.FormFlattening = true;
+        stamp.Close();
+        pdfReader.Close();
+
+        // now delete the original file and rename the temp file to the original file
+        File.Delete(FileLocation);
+        File.Move(FileLocation.Replace(".pdf", "[temp][file].pdf"), FileLocation);
+        //File.Delete("D:\\myImage.png");
+    }
+
+    // Write Text on Image
+    private void DrawText(String text)
+    {
+        ////first, create a dummy bitmap just to get a graphics object
+        //System.Drawing.Image img = new Bitmap(1, 1);
+        //Graphics drawing = Graphics.FromImage(img);
+
+        ////measure the string to see how big the image needs to be
+        //SizeF textSize = drawing.MeasureString(text, font);
+
+        ////free up the dummy image and old graphics object
+        //img.Dispose();
+        //drawing.Dispose();
+
+        ////create a new image of the right size
+        //img = new Bitmap((int)textSize.Width, (int)textSize.Height);
+        //drawing = Graphics.FromImage(img);
+
+        ////paint the background
+        ////drawing.Clear(backColor);
+
+        ////create a brush for the text
+        //Brush textBrush = new SolidBrush(textColor);
+
+        //drawing.DrawString(text, font, textBrush, 0, 0);
+
+        //drawing.Save();
+
+        //textBrush.Dispose();
+        //drawing.Dispose();
+        //img.Save("D:\\myImage.png", ImageFormat.Png);
+        ////return img;
+
+
+        text = text.Trim();
+        Bitmap bitmap = new Bitmap(1, 1);
+        System.Drawing.Font font = new System.Drawing.Font("Calibri", 15, FontStyle.Regular, GraphicsUnit.Pixel);
+        Graphics graphics = Graphics.FromImage(bitmap);
+        int width = 400;
+        int height = (int)graphics.MeasureString(text, font).Height;
+        bitmap = new Bitmap(bitmap, new Size(width, height));
+        graphics = Graphics.FromImage(bitmap);
+        graphics.Clear(Color.Transparent);
+        graphics.SmoothingMode = SmoothingMode.AntiAlias;
+        graphics.TextRenderingHint = TextRenderingHint.AntiAlias;
+        graphics.DrawString(text, font, new SolidBrush(Color.Black), 0, 0);
+        graphics.Flush();
+        graphics.Dispose();
+        //string fileName = Path.GetFileNameWithoutExtension(Path.GetRandomFileName()) + ".jpg";
+        //string fileName = Path.GetFileNameWithoutExtension(Path.GetRandomFileName()) + ".jpg";
+        bitmap.Save("D:\\myImage.png", ImageFormat.Png);
+
+    }
+
+----------------------------------------------------------------------
 --> Regular expression for file uploader for formating.
 -> Aspx
 
