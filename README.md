@@ -1,5 +1,27 @@
 # Custom-Code
 
+
+
+----------------------------------------------------------------------
+--> Script for PFD downloading.
+
+ Response.Clear();
+                    Response.Buffer = true;
+                    Response.ClearContent();
+                    Response.ClearHeaders();
+                    Response.Charset = "";
+                    StringWriter strwritter = new StringWriter();
+                    HtmlTextWriter htmltextwrtter = new HtmlTextWriter(strwritter);
+                    Response.Cache.SetCacheability(HttpCacheability.NoCache);
+                    Response.ContentType = "application/pdf";
+                    Response.AddHeader("Content-Disposition", "attachment;filename=" + pdfFileName);
+                    Response.ContentEncoding = System.Text.Encoding.Unicode;
+                    Response.BinaryWrite(System.Text.Encoding.Unicode.GetPreamble());
+                    Response.TransmitFile((pdfFilePathWithoutExtension.Value + ".pdf"));
+                    Response.Flush();
+                    Response.End();
+                    
+                    
 ----------------------------------------------------------------------
 --> Text Water Mark Script.
 
