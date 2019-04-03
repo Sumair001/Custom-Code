@@ -1,6 +1,55 @@
 # Custom-Code
+----------------------------------------------------------------------
+--> Highlight text in gridview
+<style type="text/css">
+    .highlight {
+        text-decoration: none;
+        font-weight: bold;
+        color: black;
+        background: #ffff0087;
+        display: inline-block;
+    }
+</style>
+
+<asp:GridView ID="grdSearch" runat="server"
+              AutoGenerateColumns="false">
+<Columns>
+<asp:TemplateField HeaderText="FirstName">
+<ItemTemplate>
+<asp:Label ID="lblFirstName" runat="server" 
+           Text='<%# Highlight(Eval("FirstName").ToString()) %>'/>
+</ItemTemplate>
+</Columns>
+</asp:GridView>
+
+ public string Highlight(string InputTxt)
+    {
+        string Search_Str = txtBookTitle.Text.ToString();
+
+        // Setup the regular expression and add the Or operator.
+
+        Regex RegExp = new Regex(Search_Str.Replace(" ", "|").Trim(),
+
+        RegexOptions.IgnoreCase);
 
 
+
+        // Highlight keywords by calling the 
+
+        //delegate each time a keyword is found.
+
+        return RegExp.Replace(InputTxt,
+
+          new MatchEvaluator(ReplaceKeyWords));
+        // Set the RegExp to null.
+        RegExp = null;
+    }
+
+    public string ReplaceKeyWords(Match m)
+
+    {
+        return "<span class=highlight>" + m.Value + "</span>";
+    }
 
 ----------------------------------------------------------------------
 --> Script for PFD downloading.
