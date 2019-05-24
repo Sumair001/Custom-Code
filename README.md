@@ -1,5 +1,8 @@
 # Custom-Code
 ----------------------------------------------------------------------
+--> Insert, UPdate and Delete in single table with @table
+
+----------------------------------------------------------------------
 --> Highlight text in gridview
 <style type="text/css">
     .highlight {
