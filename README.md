@@ -2,6 +2,24 @@
 ----------------------------------------------------------------------
 --> Insert, UPdate and Delete in single table with @table
 
+ALTER PROCEDURE [dbo].[SP_Hotel_Info_Update]
+     -- Add the parameters for the stored procedure here
+    @XHotelInfoDetails UpdateHotelTableType READONLY,
+
+AS
+BEGIN
+
+    MERGE dbo.HotelInfo AS trg
+    USING @XHotelInfoDetails AS src
+      ON src.ID = trg.ID
+     WHEN MATCHED THEN
+       UPDATE SET FromDate = src.FromDate
+     WHEN NOT MATCHED BY TARGET THEN
+       INSERT (col1, col2, ...)
+       VALUES (src.col1, src.col2, ...);
+END
+
+
 ----------------------------------------------------------------------
 --> Highlight text in gridview
 <style type="text/css">
