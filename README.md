@@ -1,4 +1,20 @@
 # Custom-Code
+
+
+
+----------------------------------------------------------------------
+--> Sql Paging
+DECLARE @Index INT;
+DECLARE @PageSize INT;
+
+SET @Index = 3;
+SET @PageSize = 5;
+
+SELECT *  FROM
+  (SELECT  ROW_NUMBER() OVER (ORDER BY EmpID asc) as MyRowNumber,*
+  FROM Employee) tblEmployee
+WHERE MyRowNumber BETWEEN ( ((@Index - 1) * @PageSize )+ 1) AND @Index*@PageSize 
+
 ----------------------------------------------------------------------
 --> Insert, UPdate and Delete in single table with @table
 
