@@ -1,5 +1,12 @@
 # Custom-Code
 
+----------------------------------------------------------------------
+--> Adding and removing space in string.
+// Add space
+hdnType.Value = hdnType.Value.Insert(6," ")
+
+// Remove spaces from Type name
+hdnType.Value = string.Join("", hdnType.Value.Split(default(string[]), StringSplitOptions.RemoveEmptyEntries));
 
 
 ----------------------------------------------------------------------
