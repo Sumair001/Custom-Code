@@ -1,5 +1,15 @@
 # Custom-Code
 
+----------------------------------------------------------------------
+--> Get gridview row in button click event.
+
+protected void lnk_Name_Click(object sender, EventArgs e)
+    {
+        GridViewRow row = (GridViewRow)((LinkButton)sender).NamingContainer;
+        LinkButton lnk_Name = (LinkButton)row.FindControl("lnk_Name");
+
+
+    }
 
 ----------------------------------------------------------------------
 --> Date formate to nvarchar 2017-7-17.
