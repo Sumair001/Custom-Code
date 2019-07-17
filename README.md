@@ -1,5 +1,11 @@
 # Custom-Code
 
+
+----------------------------------------------------------------------
+--> Date formate to nvarchar 2017-7-17.
+
+CONVERT(nvarchar(10), RequestedDate, 120)
+
 ----------------------------------------------------------------------
 --> Adding and removing space in string.
 // Add space
