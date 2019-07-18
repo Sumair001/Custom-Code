@@ -1,6 +1,37 @@
 # Custom-Code
 
 ----------------------------------------------------------------------
+--> Email Code using credentials.
+
+ //Working with credentails
+            var fromAddress = new MailAddress("sumairsattar62@gmail.com");
+            var fromPassword = "sumair009";
+            var toAddress = new MailAddress("sumairsattar6@gmail.com");
+
+            string subject = "subject";
+            string body = "body";
+
+            System.Net.Mail.SmtpClient smtp = new System.Net.Mail.SmtpClient
+            {
+                Host = "smtp.gmail.com",
+                Port = 587,
+                EnableSsl = true,
+                DeliveryMethod = System.Net.Mail.SmtpDeliveryMethod.Network,
+                UseDefaultCredentials = true,
+                Credentials = new NetworkCredential(fromAddress.Address, fromPassword)
+
+            };
+
+            using (var message = new System.Net.Mail.MailMessage(fromAddress, toAddress)
+            {
+                Subject = subject,
+                Body = body
+            })
+
+
+                smtp.Send(message);
+
+----------------------------------------------------------------------
 --> Get gridview row in button click event.
 
 protected void lnk_Name_Click(object sender, EventArgs e)
