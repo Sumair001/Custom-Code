@@ -33,13 +33,12 @@ protected string RealDateTime(string BranchID)
 ----------------------------------------------------------------------
 --> Email Code using credentials.
 
- //Working with credentails
-            var fromAddress = new MailAddress("sumairsattar62@gmail.com");
-            var fromPassword = "sumair009";
-            var toAddress = new MailAddress("sumairsattar6@gmail.com");
-
-            string subject = "subject";
-            string body = "body";
+ public string SendEmail(string fromAddr, string fromPswd, string toAddr, string subject, string body, string processName)
+    {
+        try
+        {
+            var fromAddress = new MailAddress(fromAddr);
+            var toAddress = new MailAddress(toAddr);
 
             System.Net.Mail.SmtpClient smtp = new System.Net.Mail.SmtpClient
             {
@@ -48,18 +47,30 @@ protected string RealDateTime(string BranchID)
                 EnableSsl = true,
                 DeliveryMethod = System.Net.Mail.SmtpDeliveryMethod.Network,
                 UseDefaultCredentials = true,
-                Credentials = new NetworkCredential(fromAddress.Address, fromPassword)
-
+                Credentials = new NetworkCredential(fromAddress.Address, fromPswd)
             };
 
             using (var message = new System.Net.Mail.MailMessage(fromAddress, toAddress)
             {
                 Subject = subject,
-                Body = body
+                Body = body,
+                IsBodyHtml = true
             })
-
-
                 smtp.Send(message);
+
+
+            // Save to DB
+            SaveEmailRecords(processName, fromAddr, toAddr, body, "Sent");
+            return string.Empty;
+        }
+        catch (Exception ex)
+        {
+            // Save to DB
+            SaveEmailRecords(processName, fromAddr, toAddr, body, "Not Sent");
+            return ex.Message + " " + ex.StackTrace;
+        }
+
+    }
 
 ----------------------------------------------------------------------
 --> Get gridview row in button click event.
