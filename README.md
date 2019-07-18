@@ -1,5 +1,35 @@
 # Custom-Code
 
+
+----------------------------------------------------------------------
+--> Find Real Time according to coountry.
+
+
+protected string RealDateTime(string BranchID)
+    {
+        try
+        {
+            if (BranchID == "2")
+            {
+                return TimeZoneInfo.ConvertTime(Convert.ToDateTime(DateTime.Now), TimeZoneInfo.FindSystemTimeZoneById("Pakistan Standard Time")).ToString();
+            }
+            else if (BranchID == "4")
+            {
+                return TimeZoneInfo.ConvertTime(Convert.ToDateTime(DateTime.Now), TimeZoneInfo.FindSystemTimeZoneById("E. Africa Standard Time")).ToString();
+            }
+            else
+            {
+                return TimeZoneInfo.ConvertTime(Convert.ToDateTime(DateTime.Now), TimeZoneInfo.FindSystemTimeZoneById("India Standard Time")).ToString();
+            }
+        }
+        catch (Exception Exp)
+        {
+            lblError.Text = cMessages.Desc(GlobalMsg.g_UnkownFailed);
+             
+            return "";
+        }
+    }
+    
 ----------------------------------------------------------------------
 --> Email Code using credentials.
 
