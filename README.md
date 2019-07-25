@@ -37,8 +37,9 @@ protected string RealDateTime(string BranchID)
     {
         try
         {
-            var fromAddress = new MailAddress(fromAddr);
-            var toAddress = new MailAddress(toAddr);
+        // First of all allow less secure app in sumair.sattar@biznussoft.com account's setting
+            var fromAddress = new MailAddress("sumair.sattar@biznussoft.com");
+            var toAddress = new MailAddress("sumairsattar62@gmail.com");
 
             System.Net.Mail.SmtpClient smtp = new System.Net.Mail.SmtpClient
             {
@@ -47,14 +48,14 @@ protected string RealDateTime(string BranchID)
                 EnableSsl = true,
                 DeliveryMethod = System.Net.Mail.SmtpDeliveryMethod.Network,
                 UseDefaultCredentials = true,
-                Credentials = new NetworkCredential(fromAddress.Address, fromPswd)
+                Credentials = new NetworkCredential(fromAddress.Address, "sumair007")
             };
 
             using (var message = new System.Net.Mail.MailMessage(fromAddress, toAddress)
             {
-                Subject = subject,
-                Body = body,
-                IsBodyHtml = true
+                Subject = "Test Email",
+                Body = "Salam! Sumair",
+                IsBodyHtml = false
             })
                 smtp.Send(message);
 
