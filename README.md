@@ -1,5 +1,8 @@
 # Custom-Code
+----------------------------------------------------------------------
+--> Query to assign Sno to same records.
 
+Select dense_rank() OVER (ORDER BY CONVERT(nvarchar(13), IntegrationLogDetail.DateTime, 120) desc) as DT_SNO,
 
 ----------------------------------------------------------------------
 --> Find Real Time according to coountry.
