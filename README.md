@@ -1,5 +1,238 @@
 # Custom-Code
 ----------------------------------------------------------------------
+--> Nested Gridview Work
+
+--ASP
+  <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="gridviewWrapper table table-responsive">
+                    <asp:GridView ID="gv_Main" runat="server" CssClass="object-grid table-bordered table-condensed table-hover"
+                        RowStyle-CssClass="rowStyle" ShowHeaderWhenEmpty="true" AlternatingRowStyle-CssClass="alterrow" AllowPaging="true"
+                        EmptyDataText="No records found" AutoGenerateColumns="false" PageSize="10" HeaderStyle-CssClass="grid-header" OnRowDataBound="gv_Main_OnRowDataBound"
+                        OnPageIndexChanging="gv_Main_PageIndexChanging" PagerStyle-CssClass="grdviewpage" PagerStyle-HorizontalAlign="Center">
+                        <PagerSettings
+                            Position="TopAndBottom"
+                            Mode="NextPrevious" />
+                        <PagerTemplate>
+                            <div>
+                                <div class="page-no">
+                                    <% if (gv_Main.PageCount > 0)
+                                        { %>
+                                    <i>You are viewing page <%= gv_Main.PageIndex + 1 %> of <%=gv_Main.PageCount %></i> <% } %>
+                                </div>
+                                <div>
+                                    <asp:LinkButton runat="server" ID="btn_First" CommandName="Page" Font-Underline="false" CommandArgument="First" ToolTip="Navigate to First Page" Text="<<"></asp:LinkButton>
+                                    <asp:LinkButton runat="server" ID="btn_Pre" CommandName="Page" Font-Underline="false" CommandArgument="Prev" ToolTip="Navigate to Previous Page" Text="Previous"></asp:LinkButton>
+                                    <asp:LinkButton runat="server" ID="btn_Next" CommandName="Page" Font-Underline="false" CommandArgument="Next" ToolTip="Navigate to Next Page" Text="Next"></asp:LinkButton>
+                                    <asp:LinkButton runat="server" ID="btn_Last" CommandName="Page" Font-Underline="false" CommandArgument="Last" ToolTip="Navigate to Last Page" Text=">>"></asp:LinkButton>
+                                </div>
+                            </div>
+                        </PagerTemplate>
+                        <Columns>
+                            <asp:TemplateField>
+                                <ItemTemplate>
+                                    <asp:Label ID="lbl_SNO" runat="server" Visible="false" Text='<%#Eval("DT_SNO") %>'></asp:Label>
+                                    <img alt="" style="cursor: pointer" src="../../images/Other/plus.png" />
+                                    <asp:Panel ID="pnlOrders" runat="server" Style="display: none">
+                                        <asp:GridView ID="gv_IntegrationLogs" runat="server" AutoGenerateColumns="false" CssClass="object-grid table-bordered table-condensed table-hover"
+                                             ShowHeader="false">
+                                            <Columns>
+                                                <asp:TemplateField HeaderStyle-Width="10%" HeaderText="Main">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="lbl_ObjectName" runat="server" Text='<%#Eval("ObjectName") %>'></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderStyle-Width="10%" HeaderText="Date">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="lbl_LogDate" runat="server" Text='<%#Eval("LogDate") %>'></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderStyle-Width="10%" HeaderText="Related">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="lbl_SubObject" runat="server" Text='<%#Eval("SubObject") %>'></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderStyle-Width="15%" HeaderText="RecordID">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="lbl_RecordID" runat="server" Text='<%#Eval("RecordID") %>'></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderStyle-Width="15%" HeaderText="Error">
+                                                    <ItemTemplate>
+                                                        <div class="cell-overflow">
+                                                            <asp:Label ID="lbl_Error" runat="server" Text='<%#Eval("ErrorMessage") %>'></asp:Label>
+                                                        </div>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderStyle-Width="15%" HeaderText="Value" Visible="false">
+                                                    <ItemTemplate>
+                                                        <div class="cell-overflow">
+                                                            <asp:Label ID="lbl_RecordValue" runat="server" Text='<%#Eval("RecordValue") %>'></asp:Label>
+                                                        </div>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="Detail" HeaderStyle-Width="20%" Visible="false">
+                                                    <ItemTemplate>
+                                                        <div id="DivStraceDetailToggle" class="cell-overflow">
+                                                            <asp:Label ID="lbl_StraceDetail" runat="server" Text='<%#Eval("StraceDetail") %>'></asp:Label>
+                                                        </div>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderStyle-Width="5%" HeaderText="2-Way">
+                                                    <ItemTemplate>
+                                                        <asp:CheckBox ID="chk_TwoWay" runat="server" Checked='<%#Convert.ToBoolean(Eval("IsTwoWaySync")) %>' Enabled="false" CssClass="grid-checkbox" />
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                            </Columns>
+                                        </asp:GridView>
+                                    </asp:Panel>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField HeaderStyle-Width="10%" HeaderText="Main">
+                                <ItemTemplate>
+                                    <%--<asp:Label ID="lbl_ObjectName" runat="server" Text='<%#Eval("ObjectName") %>'></asp:Label>--%>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField HeaderStyle-Width="10%" HeaderText="Date">
+                                <ItemTemplate>
+                                    <%--<asp:Label ID="lbl_LogDate" runat="server" Text='<%#Eval("LogDate") %>'></asp:Label>--%>
+                                    <asp:Label ID="lbl_DateHour" runat="server" Text='<%#Eval("DateHour") %>'></asp:Label>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField HeaderStyle-Width="10%" HeaderText="Related">
+                                <ItemTemplate>
+                                    <%--<asp:Label ID="lbl_SubObject" runat="server" Text='<%#Eval("SubObject") %>'></asp:Label>--%>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField HeaderStyle-Width="15%" HeaderText="RecordID">
+                                <ItemTemplate>
+                                    <%--<asp:Label ID="lbl_RecordID" runat="server" Text='<%#Eval("RecordID") %>'></asp:Label>--%>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField HeaderStyle-Width="15%" HeaderText="Error">
+                                <ItemTemplate>
+                                    <div class="cell-overflow">
+                                        <%--<asp:Label ID="lbl_Error" runat="server" Text='<%#Eval("ErrorMessage") %>'></asp:Label>--%>
+                                    </div>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField HeaderStyle-Width="15%" HeaderText="Value" Visible="false">
+                                <ItemTemplate>
+                                    <div class="cell-overflow">
+                                        <%--<asp:Label ID="lbl_RecordValue" runat="server" Text='<%#Eval("RecordValue") %>'></asp:Label>--%>
+                                    </div>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField HeaderText="Detail" HeaderStyle-Width="20%" Visible="false">
+                                <ItemTemplate>
+                                    <div id="DivStraceDetailToggle" class="cell-overflow">
+                                        <%--<asp:Label ID="lbl_StraceDetail" runat="server" Text='<%#Eval("StraceDetail") %>'></asp:Label>--%>
+                                    </div>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField HeaderStyle-Width="5%" HeaderText="2-Way">
+                                <ItemTemplate>
+                                    <%--<asp:CheckBox ID="chk_TwoWay" runat="server" Checked='<%#Convert.ToBoolean(Eval("IsTwoWaySync")) %>' Enabled="false" CssClass="grid-checkbox" />--%>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                        </Columns>
+                    </asp:GridView>
+                </div>
+            </div>
+        </div>
+    </div>
+                        
+                        
+--> Javascript
+
+<script type="text/javascript">
+        $("[src*=plus]").live("click", function () {
+            $(this).closest("tr").after("<tr><td></td><td colspan = '999'>" + $(this).next().html() + "</td></tr>")
+            $(this).attr("src", "../../images/Other/minus.png");
+        });
+        $("[src*=minus]").live("click", function () {
+            $(this).attr("src", "../../images/Other/plus.png");
+            $(this).closest("tr").next().remove();
+        });
+    </script>
+    
+    
+--> C#
+
+ void GetIntegrationLogs(string sNo, GridView gv)
+    {
+
+        IntegrationHelper h = new IntegrationHelper(UserID, Environment, LCValue);
+        DataTable dt = new DataTable();
+        dt = h.GetIntegrationLogs(ddl_Users.SelectedValue, ddl_Object.SelectedValue,
+                                   !string.IsNullOrEmpty(txt_FromDate.Text) ? DateTime.Parse(txt_FromDate.Text).ToString("yyyy-MM-dd") : txt_FromDate.Text,
+                                   !string.IsNullOrEmpty(txt_ToDate.Text) ? DateTime.Parse(txt_ToDate.Text).ToString("yyyy-MM-dd") : txt_ToDate.Text, sNo);
+
+        for (int i = 0; i < gv.Columns.Count; i++)
+        {
+            if (gv.Columns[i].HeaderText == "Value" || gv.Columns[i].HeaderText == "Detail")
+            {
+                if (currentUserRole == "BizConnectUser")
+                {
+                    gv.Columns[i].Visible = false;
+                }
+                else
+                {
+                    gv.Columns[i].Visible = true;
+                }
+            }
+        }
+        if (sNo == string.Empty)
+        {
+            DataView view = new DataView(dt);
+            dt = view.ToTable(true, "DT_SNO", "DateHour");
+        }
+        else
+        {
+            if (currentUserRole == "BizConnectUser")
+            {
+                gv.Columns[5].Visible = false;
+                gv.Columns[6].Visible = false;
+            }
+            else
+            {
+                gv.Columns[5].Visible = true;
+                gv.Columns[6].Visible = true;
+            }
+
+            //if (dt != null && dt.Rows.Count > 0)
+            //{
+            //    DataView dv = new DataView(dt);
+            //    dv.Sort = Helper.GetStringValue(Helper.BizConnectIntegrationVariables.LogDate) + " desc";
+            //    gv.DataSource = dv.ToTable();
+            //}
+            //else
+            //{
+            //    gv.DataSource = dt;
+            //}
+        }
+        gv.DataSource = dt;
+        gv.DataBind();
+
+    }
+    
+    
+        protected void gv_Main_OnRowDataBound(object sender, GridViewRowEventArgs e)
+    {
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            Label lbl_SNO = (Label)e.Row.FindControl("lbl_SNO");
+            GridView gv_IntegrationLogs = (GridView)e.Row.FindControl("gv_IntegrationLogs");
+            GetIntegrationLogs(lbl_SNO.Text, gv_IntegrationLogs);
+        }
+    }
+
+
+
+
+
+----------------------------------------------------------------------
 --> Query to assign Sno to same records.
 
 Select dense_rank() OVER (ORDER BY CONVERT(nvarchar(13), IntegrationLogDetail.DateTime, 120) desc) as DT_SNO,
