@@ -1,6 +1,22 @@
 # Custom-Code
 
 
+----------------------------------------------------------------------
+--> Jquery function to run on page before each postback
+
+<script type="text/javascript">
+        // Script to run before each postback to check validation.
+        $('form').submit(function () {
+            var hv = $('#ContentPlaceHolder1_hdn_IsSaved').val();
+            return $.parseJSON(hv.toLowerCase());
+        });
+    </script>
+
+
+
+
+
+
 
 ----------------------------------------------------------------------
 --> Nested Gridview Work
