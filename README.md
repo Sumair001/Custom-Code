@@ -2,6 +2,24 @@
 
 
 ----------------------------------------------------------------------
+--> Javascript function to run on page before each postback using customvalidator with fix group.
+
+<script type="text/javascript">
+        // Script to stop postback if records not saved.
+        function ValidateListBox(sender, args) {
+            var isSaved = document.getElementById("<%=hdn_IsSaved.ClientID%>").value;
+            if (isSaved == "True") {
+                args.IsValid = true;
+            }
+            else {
+                alert('Records are not saved.');
+                args.IsValid = false;
+            }
+        }
+    </script>
+
+
+----------------------------------------------------------------------
 --> Jquery function to run on page before each postback
 
 <script type="text/javascript">
