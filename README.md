@@ -1,6 +1,22 @@
 # Custom-Code
 
 
+
+
+----------------------------------------------------------------------
+Stop Double Clicking in asp.net
+ OnClientClick="return CheckDouble();"
+
+<script type="text/javascript">
+        var submit = 0;
+        function CheckDouble() {
+            if (++submit > 1) {
+                alert('This sometimes takes a few seconds - please be patient.');
+                return false;
+            }
+        }
+    </script>
+----------------------------------------------------------------------
 ----------------------------------------------------------------------
 --> Javascript function to run on page before each postback using customvalidator with fix group.
 
