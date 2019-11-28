@@ -10,18 +10,19 @@ Stop Double Clicking in asp.net
 <script type="text/javascript">
         var submit = 0;
         function CheckDouble() {
-            if (typeof (Page_ClientValidate) == 'function') {
-                Page_ClientValidate();
-            }
-            if (Page_IsValid) {
-                if (++submit > 1) {
-                    alert('This sometimes takes a few seconds - please be patient.');
-                    return false;
-                }
-            }
-            else {
+            // Un-Comment Lines if any validator is used.
+            //if (typeof (Page_ClientValidate) == 'function') {
+            //    Page_ClientValidate();
+            //}
+            //if (Page_IsValid) {
+            if (++submit > 1) {
+                alert('This sometimes takes a few seconds - please be patient.');
                 return false;
             }
+            //}
+            //else {
+            //    return false;
+            //}
         }
     </script>
 ----------------------------------------------------------------------
