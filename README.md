@@ -1,6 +1,56 @@
 # Custom-Code
+----------------------------------------------------------------------
 
 
+----------------------------------------------------------------------
+-- Session Timout Expired Warning.
+
+
+-- Web.config
+<sessionState timeout="1"></sessionState>
+
+//Optional
+<appSettings>
+    <add key="SessionWarning" value="1" />
+  </appSettings>
+-- Page javascript
+
+<script type="text/javascript">
+        var sessionTimeoutWarning = "<%= System.Configuration.ConfigurationManager.AppSettings["SessionWarning"].ToString()%>";
+        var sessionTimeout = "<%= Session.Timeout %>";
+        var timeOnPageLoad = new Date();
+
+        ////For warning
+        //setTimeout('SessionWarning()', parseInt(sessionTimeoutWarning) * 60 * 1000);
+        //To redirect to the welcome page
+        setTimeout('RedirectToWelcomePage()', parseInt(sessionTimeout) * 60 * 1000);
+
+        //Session Warning
+        function SessionWarning() {
+            //minutes left for expiry
+            var minutesForExpiry = (parseInt(sessionTimeout) -
+                parseInt(sessionTimeoutWarning));
+            var message = "Your session will expire in another " + minutesForExpiry +
+                " mins! Please Save the data before the session expires";
+            alert(message);
+            var currentTime = new Date();
+            //time for expiry
+            var timeForExpiry = timeOnPageLoad.setMinutes(timeOnPageLoad.getMinutes()
+                + parseInt(sessionTimeout));
+
+            //Current time is greater than the expiry time
+            if (Date.parse(currentTime) > timeForExpiry) {
+                alert("Session expired. You will be redirected to welcome page");
+                window.location = "../Default.aspx";
+            }
+        }
+
+        //Session timeout
+        function RedirectToWelcomePage() {
+            alert("Session expired. You will be redirected to welcome page");
+            window.location = "../Default.aspx";
+        }
+    </script>
 
 
 ----------------------------------------------------------------------
