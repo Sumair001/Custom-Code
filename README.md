@@ -1,6 +1,102 @@
 # Custom-Code
 ----------------------------------------------------------------------
 
+----------------------------------------------------------------------
+-- Async call of service methods 
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using BizConnectScheduler.BizConnectPost;
+using System.IO;
+using System.Threading;
+
+namespace BizConnectScheduler
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            try
+            {
+                LicenseExpireNotify();
+
+                ////For Testing Purpose uncomment direct method below.
+                //var ObjService = new PostBizConnectDataSoapClient();
+                //ObjService.InnerChannel.OperationTimeout = TimeSpan.FromMinutes(5);
+                //ObjService.LicenseExpireNotification();
+
+                QBOAsyncProccess();
+
+                ////For Testing Purpose uncomment direct method below.
+                //var ObjService = new PostBizConnectDataSoapClient();
+                //ObjService.InnerChannel.OperationTimeout = TimeSpan.FromMinutes(5);
+                //var x = ObjService.RunQBOnlineSchedulerSyncProcess();
+
+                Console.WriteLine("Scheduler is running...");
+                Thread.Sleep(10000);
+            }
+            catch (Exception ex)
+            {
+                string fileDate = System.DateTime.Now.ToString().Replace("/", "-");
+                var t = System.Threading.Tasks.Task.Run(() => CreateErrorFile(ex.Message
+                                                             , "ServerError"
+                                                             , fileDate.Replace(":", ".") + ""));
+                t.Wait();
+            }
+        }
+
+        // Async call to send notification emails.
+        public static async Task LicenseExpireNotify()
+        {
+            try
+            {
+                var ObjService = new PostBizConnectDataSoapClient();
+                await ObjService.LicenseExpireNotificationAsync();
+            }
+            catch (Exception ex)
+            {
+                string fileDate = System.DateTime.Now.ToString().Replace("/", "-");
+                var t = System.Threading.Tasks.Task.Run(() => CreateErrorFile(ex.Message
+                                                             , "ServerError"
+                                                             , fileDate.Replace(":", ".") + ""));
+                t.Wait();
+            }
+        }
+
+        // Async call to run QBO integration process.
+        public static async Task QBOAsyncProccess()
+        {
+            try
+            {
+                var ObjService = new PostBizConnectDataSoapClient();
+                RunQBOnlineSchedulerSyncProcessResponse x = await ObjService.RunQBOnlineSchedulerSyncProcessAsync();
+            }
+            catch (Exception ex)
+            {
+                string fileDate = System.DateTime.Now.ToString().Replace("/", "-");
+                var t = System.Threading.Tasks.Task.Run(() => CreateErrorFile(ex.Message
+                                                             , "ServerError"
+                                                             , fileDate.Replace(":", ".") + ""));
+                t.Wait();
+            }
+        }
+
+        public static void CreateErrorFile(string Message, string SourceLocation, string FileName)
+        {
+            string fileDate = System.DateTime.Now.ToString().Replace("/", "-");
+
+            if (!System.IO.Directory.Exists(SourceLocation))
+                System.IO.Directory.CreateDirectory(SourceLocation);
+
+            StreamWriter outputFile = new StreamWriter(SourceLocation + FileName);
+            outputFile.WriteLine(Message);
+            outputFile.Close();
+        }
+    }
+}
+
 
 ----------------------------------------------------------------------
 -- Session Timout Expired Warning.
