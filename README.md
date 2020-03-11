@@ -1,5 +1,45 @@
 # Custom-Code
 ----------------------------------------------------------------------
+----------------------------------------------------------------------
+-- Execute code within given time period else abort.
+
+public static bool ExecuteWithTimeLimit(TimeSpan timeSpan, Action codeBlock)
+        {
+            try
+            {
+                Task task = Task.Factory.StartNew(() => codeBlock());
+                task.Wait(timeSpan);
+                return task.IsCompleted;
+            }
+            catch (AggregateException ae)
+            {
+                throw ae.InnerExceptions[0];
+            }
+        }
+
+bool Completed = ExecuteWithTimeLimit(TimeSpan.FromMilliseconds(60000), () =>
+                        {
+                            try
+                            {
+                                // Call time bound request here.
+
+                            }
+                            catch (Exception ex)
+                            {
+                                rtnMsg += ex.Message;
+                            }
+                        });
+
+                        if (Completed)
+                        {
+                            rtnMsg += " Completed";
+                        }
+                        else
+                        {
+                            rtnMsg = "Failed 
+
+
+
 
 ----------------------------------------------------------------------
 -- Async call of service methods 
